@@ -9,6 +9,25 @@
 
 ---
 
+## Investigation Result
+
+**1 suspicious e-commerce domain → 173-domain fraud cluster → 20+ impersonated brands → shared hosting infrastructure → multi-channel reporting → post-remediation validation**
+
+### Key Findings
+
+| Finding | Evidence |
+|---|---|
+| 173 domains shared one IP | Reverse-IP + passive DNS (ViewDNS, cross-checked via Shodan) |
+| 20+ brands impersonated | Manual domain/content review |
+| Two related La Roche-Posay domains (iterative pattern) | WHOIS + lifecycle analysis |
+| Additional cluster members verified as fraudulent | 2 independent manual spot-checks |
+| Reported domain(s) blocked at browser level | Google Safe Browsing |
+| Underlying infrastructure remained operational post-report | Control-domain re-test + server re-scan |
+
+---
+
+
+
 ## TL;DR
 
 Investigated a single suspicious e-commerce link and traced it through domain WHOIS, DNS resolution, IP WHOIS and BGP/ASN analysis to a shared hosting IP serving **173 counterfeit storefronts** impersonating 20+ unrelated trademarked brands, all built from an identical template. Verified the cluster via independent tools and manual spot-checks, reported findings across four channels (registrar, hosting provider, Google Safe Browsing, RIPE), and tested the real-world effect of that reporting; finding that domain-level blocklisting protected reported URLs but left the underlying fraud infrastructure fully operational.
@@ -142,7 +161,7 @@ Registry remark: "our ai-assisted firewall will block the content
                   on the network level."
 ```
 
-**Assessment:** A single observed BGP peer indicates a small, thin network. A personal Gmail address as the registered abuse contact for a 7,680-address ASN is non-standard for a legitimate network operator. The registry's stated content-filtering claim is directly contradicted by findings below.
+**Assessment:** A single observed BGP peer is consistent with a small or newer network, though not conclusive on its own. A personal Gmail address as the registered abuse contact for a 7,680-address ASN is non-standard relative to typical network-operator practice. The registry's stated content-filtering claim is directly contradicted by observed findings below - this specific point is a verified factual contradiction, not an inference.
 
 ### RIPE aut-num Object - Gmail Contact + Firewall Remark
 ![RIPE aut-num Object - Gmail Contact + Firewall Remark](RIPE%20aut-num%20object%20%28Gmail%20contact%20%2B%20firewall%20remark%29.png)
@@ -221,12 +240,12 @@ The reply received from AS199242's registered abuse contact exhibited several ch
 
 | Signal | Assessment |
 |---|---|
-| Response latency (<2 hours) | Inconsistent with genuine manual review of a 173-domain report |
-| "AI-assisted firewall" claim | Repeats, near-verbatim, the RIPE registry remark already contradicted by observed live fraud domains |
-| Proxy-site verification request | Not a technically sound method - genuine network-level blocking requires no change in client device, cache state, or network path to observe |
-| Sender/recipient mismatch | Reply originated from the ASN's personal Gmail abuse contact despite being sent to the separately-branded `abuse@rashost.com`, indicating the "Rashost" hosting brand and the ASN operator are operationally the same party |
+| Response latency (<2 hours) | Rapid response is notable given the scope of the report (173 domains), but latency alone is not evidence of automated or non-genuine review — this is contextual, not conclusive |
+| "AI-assisted firewall" claim | Repeats, near-verbatim, the RIPE registry remark already contradicted by observed live fraud domains - this repetition, not the claim's existence alone, is the stronger signal |
+| Proxy-site verification request | An unusual verification method to request - genuine network-level blocking would not typically require a change in client device, cache state, or network path to observe |
+| Sender/recipient mismatch | Reply originated from the ASN's personal Gmail abuse contact despite being sent to the separately-branded `abuse@rashost.com`, suggesting the "Rashost" hosting brand and the ASN operator are operationally linked, though the exact relationship (same entity vs. close partnership) was not independently confirmed |
 
-**Conclusion:** The abuse-response process functions as deflection rather than genuine remediation which is consistent with, though not conclusive proof of, an operation that is either directly complicit in, or deliberately indifferent to, the abuse occurring on its infrastructure.
+**Conclusion:** Taken individually, none of these signals is conclusive. Taken together, the pattern is more consistent with a deflection-oriented abuse-response process than with genuine remediation. Though this remains an inference from indirect evidence, not a confirmed finding about the operator's intent or knowledge.
 
 ---
 
@@ -241,7 +260,7 @@ Rather than assume reporting was effective once the primary domain became inacce
 | `acornshop.vip` (unreported, same cluster - control) | **Fully accessible, no warning** |
 | 212.52.28.245 (Shodan re-scan) | **Server still online**, unchanged fingerprint (same SSH/nginx signature, same open ports) |
 
-**Finding:** Reporting produced **domain-level but not infrastructure-level, remediation.** Google Safe Browsing's blocklist protects browser users from specifically-flagged URLs, but the shared hosting account and server enabling the broader operation remain unaffected. The remaining ~170 unreported domains in the cluster continue operating normally.
+**Finding:** Based on the tests above, reporting produced **domain-level remediation, with no evidence of infrastructure-level remediation.** Google Safe Browsing's blocklist protects browser users from specifically-flagged URLs, but the shared hosting account and server enabling the broader operation showed no observable change. The unreported control domain and the server itself remained fully operational at time of testing; the status of the remaining ~170 unreported domains was not individually re-verified.
 
 > This is the key analytic takeaway of the investigation: individual URL-blocklisting is valuable for immediate user protection but does not disrupt shared fraud infrastructure at its root. Meaningful disruption requires registrar or hosting-account-level action, which as of this writing has not been confirmed for this cluster.
 
