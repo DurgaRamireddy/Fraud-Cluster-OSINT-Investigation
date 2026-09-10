@@ -245,6 +245,11 @@ Rather than assume reporting was effective once the primary domain became inacce
 
 > This is the key analytic takeaway of the investigation: individual URL-blocklisting is valuable for immediate user protection but does not disrupt shared fraud infrastructure at its root. Meaningful disruption requires registrar or hosting-account-level action, which as of this writing has not been confirmed for this cluster.
 
+### Actual Website
+![laroche-posay.us (Legit)](laroche-posay.us%20%28Legit%29.png)
+
+### Fraudulent Website
+![laroche-posaymall.com (Fake)](laroche-posaymall.com%20%28Fake%29.png)
 ---
 
 ## Skills Demonstrated
