@@ -87,6 +87,9 @@ A product page for "Anthelios SPF 50" resolved to `laroche-posaymall.com`, not a
 | Site construction | Generic WordPress/WooCommerce/Elementor template |
 | Contact info | Residential-sounding US address, unaffiliated with L'Oréal |
 
+### Page Metadata
+![Page Metadata](Metadata.png)
+
 ---
 
 ## Domain-Layer Attribution (WHOIS)
@@ -99,6 +102,10 @@ Nameservers:       ns1.dyna-ns.net, ns2.dyna-ns.net
 ```
 
 **Key finding:** domain age (11 days between registration and a full multi-category storefront appearing) is inconsistent with organic business growth and was treated as a strong fraud indicator.
+
+### WHOIS Record
+![WHOIS Record - Dynadot, Creation Date](WHOIS%20record%20%28Dynadot%2C%20creation%20date%29.png)
+
 
 ---
 
@@ -113,6 +120,9 @@ org:          Beijing Ruihao Kai Yuan Technology Co., Ltd
 country:      US
 abuse-c:      abuse@rashost.com
 ```
+
+### RIPE inetnum Record
+![RIPE inetnum Record](RIPE%20inetnum%20record.png)
 
 ---
 
@@ -134,6 +144,8 @@ Registry remark: "our ai-assisted firewall will block the content
 
 **Assessment:** A single observed BGP peer indicates a small, thin network. A personal Gmail address as the registered abuse contact for a 7,680-address ASN is non-standard for a legitimate network operator. The registry's stated content-filtering claim is directly contradicted by findings below.
 
+### RIPE aut-num Object - Gmail Contact + Firewall Remark
+![RIPE aut-num Object - Gmail Contact + Firewall Remark](RIPE%20aut-num%20object%20%28Gmail%20contact%20%2B%20firewall%20remark%29.png)
 ---
 
 ## Infrastructure Pivot (Reverse-IP / Passive DNS)
@@ -151,6 +163,11 @@ Suffixes observed: -mall, -sale, -store, -shop, -deal, -life, -gift, -offer, -li
 
 **Lifecycle pattern identified:** two sequential domains targeting the same brand were found - `laroche-posaylife.com` (created 2026-08-15, offline prior to this investigation) and `laroche-posaymall.com` (created 2026-08-22) suggesting an iterative replace-on-takedown operational model that predates this investigation.
 
+### ViewDNS 173-Domain List
+![ViewDNS 173-Domain List](ViewDNS%20173-domain%20list.png)
+
+---
+
 ### Server Fingerprint (Shodan)
 
 ```
@@ -160,6 +177,9 @@ Open ports:   22/tcp (OpenSSH 9.6p1, Ubuntu), 80/tcp (HTTP)
 ```
 
 Root HTTP response on port 80 returns a minimal default page - individual storefronts are served via **name-based virtual hosting** (per-domain `Host:` header routing), confirming a single server mass-hosting 173 independently-branded fraud domains.
+
+### Shodan Host Page
+![Shodan Host Page](Shodan%20host%20page.png)
 
 ---
 
@@ -183,6 +203,9 @@ Two additional domains from the reverse-DNS list were independently spot-checked
 | **Rashost** (hosting abuse contact) | Email report to abuse@rashost.com | Reply received in under 2 hours from a different address (the ASN's registered personal Gmail contact) |
 | **RIPE NCC** | Reported non-standard abuse contact and contradicted firewall claim | Resolved as out-of-scope - RIPE confirmed it does not investigate abuse reports, only maintains registry contact data |
 
+### Dynadot Case Confirmation Email
+![Dynadot Case Confirmation Email](Dynadot%20case-confirmation%20email.png)
+
 ---
 
 ## Abuse-Response Analysis
@@ -190,6 +213,9 @@ Two additional domains from the reverse-DNS list were independently spot-checked
 The reply received from AS199242's registered abuse contact exhibited several characteristics inconsistent with genuine abuse handling:
 
 **Response received (summarized):** Claimed an "AI-assisted firewall" had added the reported domains to a "permanent abuse database," cited a non-standard "DMCA Registration Number," referenced 17 U.S.C. §512 and the EU Digital Services Act's "mere conduit" provisions, and requested verification via third-party proxy services (`proxysite.com`, `croxyproxy.com`, and others).
+
+### The Rashost/Malakmadze Abuse Response Email
+![The Rashost/Malakmadze Abuse Response Email](The%20Rashost-Malakmadze%20email.png)
 
 **Analysis:**
 
