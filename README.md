@@ -240,7 +240,7 @@ The reply received from AS199242's registered abuse contact exhibited several ch
 
 | Signal | Assessment |
 |---|---|
-| Response latency (<2 hours) | Rapid response is notable given the scope of the report (173 domains), but latency alone is not evidence of automated or non-genuine review — this is contextual, not conclusive |
+| Response latency (<2 hours) | Rapid response is notable given the scope of the report (173 domains), but latency alone is not evidence of automated or non-genuine review - this is contextual, not conclusive |
 | "AI-assisted firewall" claim | Repeats, near-verbatim, the RIPE registry remark already contradicted by observed live fraud domains - this repetition, not the claim's existence alone, is the stronger signal |
 | Proxy-site verification request | An unusual verification method to request - genuine network-level blocking would not typically require a change in client device, cache state, or network path to observe |
 | Sender/recipient mismatch | Reply originated from the ASN's personal Gmail abuse contact despite being sent to the separately-branded `abuse@rashost.com`, suggesting the "Rashost" hosting brand and the ASN operator are operationally linked, though the exact relationship (same entity vs. close partnership) was not independently confirmed |
